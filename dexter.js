@@ -5,6 +5,17 @@ var Dexter = function() {
   this.iframe = document.getElementById('textField');
   this.editor = this.iframe.contentWindow.document || this.iframe.contentDocument;
   this.editor.designMode = 'on';
+  this.setStyles();
+};
+
+
+// Set styles.
+Dexter.prototype.setStyles = function() {
+  var css = document.createElement('link');
+  css.href = 'editor.css';
+  css.rel = 'stylesheet';
+  css.type = 'text/css';
+  this.editor.body.appendChild(css);
 };
 
 // Button handlers.
@@ -75,13 +86,20 @@ window.onload = function() {
   };
   
   // Textfield event handlers.
+  // Currently updates on mouseclick and arrow keys.
   dexter.editor.onmouseup = function() {
+    dexter.updateButtonStates();
+  };
+  dexter.editor.onkeydown = function(e) {
+    if (e.keyCode < 37 || e.keyCode > 40) {
+      return;
+    }
     dexter.updateButtonStates();
   };
 
   // Submit event handler.
   document.getElementById('editorSubmit').onclick = function(e) {
     e.preventDefault();
-    console.log('Output: ' + dexter.editor.body.innerHTML);
+    console.log('Output: ' + dexter.editor.body.innerHTML.replace(/<link.+>/, ''));
   };
 };

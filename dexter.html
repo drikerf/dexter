@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='UTF-8'>
+  <title>Dexter</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel='stylesheet' href='dexter.css'>
+  <script src='dexter.js'></script>
+</head>
+<body>
+<div class='container'>
+  <h1>Dexter</h1>
+  <hr />
+  <form action='#TODO' name='editor' id='editor' method='post'>
+    <input name='title' id='title' type'text' placeholder='title' class='form-control'/>
+    <div id='buttons'>
+      <input id='bold' type='button' value='B' class='btn btn-default' />
+      <input id='underline' type='button' value='U' class='btn btn-default' />
+      <input id='italic' type='button' value='I' class='btn btn-default' />
+      <input id='link' type='button' value='Link' class='btn btn-default' />
+      <input id='unlink' type='button' value='Unlink' class='btn btn-default' />
+      <input id='image' type='button' value='Image' class='btn btn-default' />
+    </div>
+    <textarea name='textBody' id='textBody'></textarea>
+    <iframe name='textField' id='textField'></iframe>
+    <input name='editorSubmit' id='editorSubmit' type='button' value='Submit' class='btn btn-lg btn-primary btn-block'/>
+  </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+#buttons {
+  padding: 10px 0 10px;
+}
+#textBody {
+  display: none;
+}
+#textField {
+  border: #ccc 1px solid;
+  width: 100%;
+  height: 300px;
+}

@@ -19,25 +19,47 @@ Dexter.prototype.setStyles = function() {
 };
 
 // Button handlers.
-Dexter.prototype.handleBold = function(e) {
+Dexter.prototype.handleBold = function(btn) {
   console.log('clicked bold');
   this.editor.execCommand('bold', false, null);
-  this.setButtonState(e);
+  this.setButtonState(btn);
   this.iframe.focus();
 };
 
-Dexter.prototype.handleUnderline = function(e) {
+Dexter.prototype.handleUnderline = function(btn) {
   console.log('clicked underline');
   this.editor.execCommand('underline', false, null);
-  this.setButtonState(e);
+  this.setButtonState(btn);
   this.iframe.focus();
 };
 
-Dexter.prototype.handleItalic = function(e) {
+Dexter.prototype.handleItalic = function(btn) {
   console.log('clicked italic');
   this.editor.execCommand('italic', false, null);
-  this.setButtonState(e);
+  this.setButtonState(btn);
   this.iframe.focus();
+};
+
+Dexter.prototype.handleLinkBtn = function(btn) {
+  var popover = document.getElementById('linkPopover');
+  if (popover.style.display === '') {
+    popover.style.top = this.iframe.getBoundingClientRect().top + 'px';
+    popover.style.left = btn.getBoundingClientRect().left + 'px';
+    popover.style.display = 'block';
+  } else {
+    popover.style.display = '';
+  }
+};
+
+// TODO: Doesnt work with firefox.
+Dexter.prototype.handleLinkSubmit = function(btn) {
+  document.getElementById('linkPopover').style.display = '';
+  var href = document.getElementById('linkHref').value;
+  this.editor.execCommand('createLink', false, href);
+};
+
+Dexter.prototype.handleUnlink = function(btn) {
+  this.editor.execCommand('unlink', false, null);
 };
 
 // Sets button to active or inactive.
@@ -60,7 +82,7 @@ Dexter.prototype.setButtonState = function(btn) {
 // Update all button states.
 Dexter.prototype.updateButtonStates = function() {
   // We need to copy this for the Editor object.
-  $this = this;
+  var $this = this;
   this.buttons.forEach(function(btn) {
     $this.setButtonState(document.getElementById(btn));
     console.log(document.getElementById(btn));
@@ -73,6 +95,7 @@ window.onload = function() {
   var dexter = new Dexter();
   
   // Button event handlers.
+  // We pass target to handlers.
   document.getElementById('bold').onclick = function(e) {
     dexter.handleBold(e.target);
   };
@@ -83,6 +106,19 @@ window.onload = function() {
 
   document.getElementById('italic').onclick = function(e) {
     dexter.handleItalic(e.target);
+  };
+
+  document.getElementById('link').onclick = function(e) {
+    dexter.handleLinkBtn(e.target);
+  };
+
+  document.getElementById('linkSubmit').onclick = function(e) {
+    e.preventDefault();
+    dexter.handleLinkSubmit(e.target);
+  };
+
+  document.getElementById('unlink').onclick = function(e) {
+    dexter.handleUnlink(e.target);
   };
   
   // Textfield event handlers.
